@@ -1,0 +1,59 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %}
+<div class="card shadow border-0">
+    <div class="card-header bg-white py-3">
+        <h4 class="m-0 font-weight-bold text-primary">👥 Управление пользователями системы</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Логин</th>
+                        <th>Email</th>
+                        <th>Уровень доступа</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td><strong>{{ user.username }}</strong></td>
+                        <td>{{ user.email|default:"—" }}</td>
+                        <td>
+                            {% if user.role == 'admin' %}
+                                <span class="badge bg-danger">Администратор</span>
+                            {% elif user.role == 'manager' %}
+                                <span class="badge bg-warning text-dark">Менеджер</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Пользователь</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.is_active %}
+                                <span class="text-success">● Активен</span>
+                            {% else %}
+                                <span class="text-muted">○ Отключен</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'user_edit' user.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Пользователей пока нет.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
