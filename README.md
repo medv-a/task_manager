@@ -42,5 +42,5 @@
 
 ### 1. Клонирование репозитория
 ```bash
-git clone <ссылка_на_твой_репозиторий>
+git clone (https://github.com/medv-a/task_manager)
 cd PythonProject3
